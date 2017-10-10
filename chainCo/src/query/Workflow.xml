@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="coffee.chain.workflow.dao.WorkflowDAO">
+	
+		<!-- 일일업무보고 임시저장 -->
+	<insert id="insertDocTemp" parameterType="workflow">
+		<selectKey keyProperty="wNo" resultType="int" order="BEFORE">
+			SELECT NVL(MAX(A.WNO),0) + 1 WNO FROM WORKFLOW1 A
+		</selectKey>
+		INSERT INTO WORKFLOW1(
+			 
+			 WNO
+			,ENO
+			,WFORMAT
+			,WTITLE	    
+		    ,WDELETEYN
+		    ,WINSERTDATE
+		    ,WUPDATEDATE
+		    ,WCODE
+			,WWTODAYDONE1 
+			,WWTODAYDONE2 
+			,WWNEXTDAYDO 
+			,WWINSTRUCTION 
+		)
+		VALUES(
+		 #{wNo}
+		,#{eNo}
+		,#{wFormat}
+		,#{wTitle}
+		,'Y'
+		,SYSDATE
+		,SYSDATE
+		,#{wCode}
+		,#{wWtodayDone1}
+		,#{wWtodayDone2}
+		,#{wWnextdayDo}
+		,#{wWinstruction}
+		)		   
+	</insert>
+
+		<!-- 일일업무보고 문서 보내기 -->
+	<insert id="insertDoc" parameterType="workflow">
+		<selectKey keyProperty="wNo" resultType="int" order="BEFORE">
+			SELECT NVL(MAX(A.WNO),0) + 1 FROM WORKFLOW1 A
+		</selectKey>
+		INSERT INTO WORKFLOW1(
+			 
+			 WNO
+			,ENO
+			,WFORMAT
+			,WTITLE	
+			,wFirstState
+			,wFirstOKState
+			,wFinalState
+			,wFinalOKState   
+		    ,WDELETEYN
+		    ,WINSERTDATE
+		    ,WUPDATEDATE
+		    ,WCODE
+			,WWTODAYDONE1 
+			,WWTODAYDONE2 
+			,WWNEXTDAYDO 
+			,WWINSTRUCTION
+		)
+		VALUES(
+		 #{wNo}
+		,#{eNo}
+		,#{wFormat}
+		,#{wTitle}
+		,#{wFirstState}
+		,#{wFirstOKState}
+		,#{wFinalState}
+		,#{wFinalOKState}
+		,'Y'
+		,SYSDATE
+		,SYSDATE
+		,#{wCode}
+		,#{wWtodayDone1}
+		,#{wWtodayDone2}
+		,#{wWnextdayDo}
+		,#{wWinstruction}
+		)		   
+	</insert>
+	
+	<!-- 상신함에서 임시저장 된 문서 리스트 view - 일일업무보고 -->
+	<select id="viewTempList" parameterType="workflow" resultType="workflow">
+		SELECT	 WFORMAT
+				,WTITLE
+				,WINSERTDATE
+		FROM WORKFLOW1
+		WHERE WCODE = '임시저장됨'
+		AND ENO = #{eNo}	
+	</select>
+	
+		<!-- 상신함에서 보내기가 된 문서 리스트 view - 일일업무보고 -->
+	<select id="viewSubmitList" parameterType="workflow" resultType="workflow">
+		SELECT	 WCODE
+				,WFORMAT
+				,WTITLE
+				,WINSERTDATE
+				,wFirstState
+		FROM WORKFLOW1	
+		WHERE WCODE = '대기'
+		AND ENO = #{eNo}
+	</select>
+	
+			<!-- 수신함 클릭시 결재할 문서 리스트 view -->
+	<select id="viewReceptionBox" parameterType="workflow" resultType="workflow">
+		SELECT	 A.WFORMAT
+				,B.EDEPT
+				,B.EPOS
+				,B.ENAME
+				,A.WTITLE
+				,A.WINSERTDATE
+				,A.wFirstokDate
+				,B.ENO
+				,A.WNO
+		FROM WORKFLOW1 A, EMPLOYEE B	
+		WHERE A.ENO = B.ENO
+		AND B.EPOS = #{ePos}
+		AND B.EDEPT = #{eDept}
+		AND A.wFirstState = '미결재'
+	</select>
+	
+	<!-- 넘어온 문서 자세히 보기 -->
+	<select id="viewDetail" parameterType="workflow" resultType="workflow">
+		SELECT	 A.WNO
+				,B.ENO
+				,A.WFORMAT
+				,A.WTITLE	
+				,A.WFIRSTSTATE    
+			    ,A.WDELETEYN
+			    ,A.WINSERTDATE
+			    ,A.WUPDATEDATE
+				,A.WWTODAYDONE1 
+				,A.WWTODAYDONE2 
+				,A.WWNEXTDAYDO 
+				,A.WWINSTRUCTION
+				,B.EDEPT
+				,B.EPOS
+				,B.ENAME	
+						
+		FROM WORKFLOW1 A, EMPLOYEE B
+		WHERE A.ENO = B.ENO
+		AND 	WNO = #{wNo}
+	
+	</select>
+	
+	<!-- 승인 혹은 반려 버튼 클릭 시, 사원과 부장사이 -->
+	<update id="doDenyApproval" parameterType="workflow">
+		UPDATE WORKFLOW1
+		SET  wDenyReason = #{wDenyReason}
+			,wFirstState = #{wFirstState}
+			,wFirstOKState = #{wFirstOKState}
+			,wFinalState = #{wFinalState}
+			,wFinalOKState = #{wFinalOKState}
+			,wSecondokDate = SYSDATE
+			,wFirstokEno = #{wFirstokEno}
+			,wSecondokEno = #{wSecondokEno}		
+		WHERE WNO = #{wNo}	
+	</update>
+	
+	<!-- 결재처리내역 클릭시 결재한 문서 리스트 view -->
+	<select id="viewApprovalHistory" parameterType="workflow" resultType="workflow">
+		SELECT	 A.WFORMAT
+				,B.EDEPT
+				,B.EPOS
+				,B.ENAME
+				,A.WTITLE
+				,A.WINSERTDATE
+				,A.wFirstokDate
+				,A.wSecondokDate
+				,B.ENO
+				,A.WNO
+		FROM WORKFLOW1 A, EMPLOYEE B	
+		WHERE A.ENO = B.ENO
+        AND A.wSecondokEno = #{wSecondokEno}
+		AND A.wFinalOKState = #{wFinalOKState}
+	</select>
+	
+	<!-- 승인함 혹은 반려함 클릭시 승인된 문서 리스트 view - 일일업무보고 -->
+	<select id="viewSubmitOKList" parameterType="workflow" resultType="workflow">
+		SELECT	 WFORMAT
+				,WTITLE
+				,WINSERTDATE
+				,wSecondokDate
+				,WNO
+		FROM WORKFLOW1	
+		WHERE wFinalOKState = #{wFinalOKState}
+		AND ENO = #{eNo}
+	</select>
+	
+	<!-- 사직서 문서 보내기 -->
+	<insert id="insertDocResign" parameterType="workflow">
+		<selectKey keyProperty="wNo" resultType="int" order="BEFORE">
+			SELECT NVL(MAX(A.WNO),0) + 1 FROM WORKFLOW1 A
+		</selectKey>
+		INSERT INTO WORKFLOW1(
+			 
+			 WNO
+			,ENO
+			,WFORMAT
+			,WTITLE	
+			,wFirstState
+			,wFirstOKState
+			,wFinalState
+			,wFinalOKState   
+		    ,WDELETEYN
+		    ,WINSERTDATE
+		    ,WUPDATEDATE
+		    ,WCODE
+		)
+		VALUES(
+		 #{wNo}
+		,#{eNo}
+		,#{wFormat}
+		,#{wTitle}
+		,#{wFirstState}
+		,#{wFirstOKState}
+		,#{wFinalState}
+		,#{wFinalOKState}
+		,'Y'
+		,SYSDATE
+		,SYSDATE
+		,#{wCode}
+		)		   
+	</insert>	
+</mapper>

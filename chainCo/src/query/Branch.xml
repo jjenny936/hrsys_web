@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="coffee.chain.branch.dao.BranchDAO">
+
+	<select id="branchEntry" parameterType="branch" resultType="branch">
+		SELECT COUNT(BNO) AS BNO, 
+			   MAX(SYEAR) AS SYEAR,
+		       SUM(SFIRSTQ) AS SFIRSTQ, 
+		       SUM(SSECONDQ) AS SSECONDQ, 
+		       SUM(STHIRDQ) AS STHIRDQ, 
+		       SUM(SFOURTHQ) AS SFOURTHQ,    
+		       TO_CHAR(SCN_TO_TIMESTAMP(ORA_ROWSCN), 'YYYY/MM/DD') AS SUPDATEDATE       
+		FROM SALES
+        WHERE SYEAR=(SELECT MAX(SYEAR) FROM SALES)
+		GROUP BY TO_CHAR(SCN_TO_TIMESTAMP(ORA_ROWSCN), 'YYYY/MM/DD')
+	</select>
+	
+	<select id="list" parameterType="branch" resultType="branch">
+		SELECT BNO, 
+			   BNAME,
+			   BDELETEYN
+		FROM BRANCH
+	</select>
+	
+	<select id="branchList" parameterType="branch" resultType="branch">
+		SELECT  A.BNO 
+			   ,A.BNAME
+			   ,A.ENO 
+			   ,B.ENAME
+			   ,A.BLOCATION 
+			   ,A.BDELETEYN 
+			   ,TO_CHAR(A.BINSERTDATE, 'YYYY/MM/DD') BINSERTDATE
+			   ,TO_CHAR(A.BUPDATEDATE, 'YYYY/MM/DD') BUPDATEDATE
+	    FROM BRANCH A, EMPLOYEE B
+	    WHERE A.ENO=B.ENO
+	    AND A.BNAME=#{bName}
+	    AND A.BDELETEYN='Y'			   
+	</select>
+	
+	<update id="update" parameterType="java.lang.String">
+		UPDATE BRANCH
+		SET BNAME=#{bName},
+			ENO=#{eNo},
+			BLOCATION=#{bLocation},
+			BUPDATEDATE=SYSDATE
+		WHERE BNO=#{bNo}	
+	</update>
+	
+	<update id="delete" parameterType="java.lang.String">
+		UPDATE BRANCH
+		SET BDELETEYN='N',
+			BUPDATEDATE=SYSDATE
+		WHERE BNAME=#{bName}	
+	</update>
+	
+	<update id="reopen" parameterType="java.lang.String">
+		UPDATE BRANCH
+		SET BDELETEYN='Y',
+			BUPDATEDATE=SYSDATE
+		WHERE BNAME=#{bName}	
+	</update>
+
+	<select id="branchDelete" parameterType="branch" resultType="branch">
+		SELECT A.BNO bNo
+		      ,A.BNAME bName
+		      ,A.ENO eNo
+		      ,A.BLOCATION bLocation
+		      ,B.ENAME eName
+		      ,TO_CHAR(A.BINSERTDATE, 'YYYY/MM/DD') bInsertDate 
+		      ,TO_CHAR(A.BUPDATEDATE, 'YYYY/MM/DD') bUpdateDate 
+		FROM BRANCH A, EMPLOYEE B
+		WHERE BDELETEYN='N'
+		AND A.ENO = B.ENO
+	</select>
+	
+	<select id="sales" parameterType="branch" resultType="branch">
+		SELECT A.BNO bNo, 
+			   B.BNAME bName,	
+			   A.SFIRSTQ sFirstQ, 
+			   A.SSECONDQ sSecondQ, 
+			   A.STHIRDQ sThirdQ, 
+			   A.SFOURTHQ sFourthQ, 
+			   A.SYEAR sYear, 
+			   A.SDELETEYN sDeleteyn, 
+			   A.SINSERTDATE sInsertDate, 
+			   A.SUPDATEDATE sUpdateDate 
+		FROM SALES A, BRANCH B 
+		WHERE A.BNO=B.BNO 
+		AND A.SYEAR=(SELECT MAX(A.SYEAR) FROM SALES A)
+	</select>
+	
+	<select id="lastYear" parameterType="branch" resultType="branch">
+		SELECT A.BNO bNo, 
+			   B.BNAME bName,	
+			   A.SFIRSTQ sFirstQ, 
+			   A.SSECONDQ sSecondQ, 
+			   A.STHIRDQ sThirdQ, 
+			   A.SFOURTHQ sFourthQ, 
+			   A.SYEAR sYear, 
+			   A.SDELETEYN sDeleteyn, 
+			   A.SINSERTDATE sInsertDate, 
+			   A.SUPDATEDATE sUpdateDate 
+		FROM SALES A, BRANCH B 
+		WHERE A.BNO=B.BNO 
+		AND A.SYEAR=(SELECT MAX(A.SYEAR)-1 FROM SALES A)
+	</select>
+	
+</mapper>

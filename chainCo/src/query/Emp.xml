@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="coffee.chain.emp.dao.EmpDAO">
+
+	<select id="empList" parameterType="emp" resultType="emp">
+		SELECT EPHOTO ePhoto, 
+			   ESIGNATURE eSignature, 
+			   ENO eNo, 
+			   EID eId, 
+			   EPW ePw, 
+			   ENAME eName, 
+			   EDEPT eDept, 
+			   EPOS ePos, 
+			   EADDR eAddr, 
+			   EPHONE ePhone, 
+			   EEMAIL eEmail,
+		       EDELETEYN eDeleteyn, 
+			   TO_CHAR(EINSERTDATE, 'YYYY/MM/DD') eInsertDate, 
+			   TO_CHAR(EUPDATEDATE, 'YYYY/MM/DD') eUpdateDate
+		FROM EMPLOYEE
+		WHERE EDEPT = #{eDept} AND EDELETEYN='Y'
+		ORDER BY EDEPT ASC
+	</select>
+	
+	<select id="login" parameterType="hashmap" resultType="emp">
+		SELECT EPOS ePos,
+			   EDEPT eDept,
+			   ENO eNo,
+			   ENAME eName,	
+			   TO_CHAR(EINSERTDATE, 'YYYY/MM/DD') eInsertDate
+		FROM EMPLOYEE
+		WHERE EID = #{eId} AND EPW = #{ePw} AND EDELETEYN='Y'			   
+	</select>
+	
+	<update id="empDelete" parameterType="java.lang.String">
+		UPDATE EMPLOYEE
+		SET EDELETEYN = 'N'
+		   ,EUPDATEDATE = SYSDATE
+		WHERE ENO = #{eNo}
+	</update>
+	
+	<update id="empUpdate" parameterType="java.lang.String">
+		UPDATE EMPLOYEE
+		SET  EID = #{eId} 
+		    ,EPW = #{ePw}
+		    ,ENAME = #{eName}
+		    ,EDEPT = #{eDept}
+		    ,EPOS = #{ePos}
+		    ,EADDR = #{eAddr}
+		    ,EPHONE = #{ePhone}
+		    ,EEMAIL = #{eEmail}
+		    ,EUPDATEDATE = SYSDATE 
+		    ,EPHOTO = #{ePhoto}
+		    ,ESIGNATURE = #{eSignature}
+		WHERE ENO = #{eNo}
+	</update>
+	
+	<select id="empMyPage" parameterType="emp" resultType="emp">
+		SELECT ENO eNo, 
+			   EID eId, 
+			   EPW ePw, 
+			   ENAME eName, 
+			   EDEPT eDept, 
+			   EPOS ePos, 
+			   EADDR eAddr, 
+			   EPHONE ePhone, 
+			   EEMAIL eEmail,
+			   EPHOTO ePhoto,
+			   ESIGNATURE eSignature,
+			   TO_CHAR(EINSERTDATE, 'YYYY/MM/DD') eInsertDate, 
+			   TO_CHAR(EUPDATEDATE, 'YYYY/MM/DD') eUpdateDate
+		FROM EMPLOYEE
+		WHERE ENO = #{eNo}
+	</select>
+	
+	<select id="empEntry" parameterType="emp" resultType="emp">
+		SELECT ENO eNo, 
+			   EID eId, 
+			   ENAME eName, 
+			   EDEPT eDept, 
+			   EPOS ePos, 
+			   EADDR eAddr, 
+			   EPHONE ePhone, 
+			   EEMAIL eEmail,
+			   EPHOTO ePhoto,
+			   TO_CHAR(EINSERTDATE, 'YYYY/MM/DD') eInsertDate, 
+			   TO_CHAR(EUPDATEDATE, 'YYYY/MM/DD') eUpdateDate
+		FROM EMPLOYEE
+		WHERE EPOS = '사장' AND EDELETEYN='Y'
+	</select>
+</mapper>

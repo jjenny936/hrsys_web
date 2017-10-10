@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre7">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v7.0">
+		<attributes>
+			<attribute name="owner.project.facets" value="jst.web"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/log4j/apache-log4j-1.2.17/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/jstl/jakarta-taglibs-standard-1.1.1/lib/jstl.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/jstl/jakarta-taglibs-standard-1.1.1/lib/standard.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/myBatis/mybatis-spring-1.2.2/mybatis-spring-1.2.2.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/myBatis/mybatis-3.2.4/mybatis-3.2.4.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/myBatis/mybatis-3.2.4/lib/asm-3.3.1.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/myBatis/mybatis-3.2.4/lib/cglib-2.2.2.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/myBatis/mybatis-3.2.4/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/myBatis/mybatis-3.2.4/lib/javassist-3.17.1-GA.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/myBatis/mybatis-3.2.4/lib/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/myBatis/mybatis-3.2.4/lib/log4j-api-2.0-beta9.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/myBatis/mybatis-3.2.4/lib/log4j-core-2.0-beta9.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/myBatis/mybatis-3.2.4/lib/slf4j-api-1.7.5.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/myBatis/mybatis-3.2.4/lib/slf4j-log4j12-1.7.5.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/spring/spring-framework-3.2.4.RELEASE/spring3.2.4_jarFile/spring-aop-3.2.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/spring/spring-framework-3.2.4.RELEASE/spring3.2.4_jarFile/spring-aspects-3.2.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/spring/spring-framework-3.2.4.RELEASE/spring3.2.4_jarFile/spring-beans-3.2.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/spring/spring-framework-3.2.4.RELEASE/spring3.2.4_jarFile/spring-build-src-3.2.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/spring/spring-framework-3.2.4.RELEASE/spring3.2.4_jarFile/spring-context-3.2.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/spring/spring-framework-3.2.4.RELEASE/spring3.2.4_jarFile/spring-context-support-3.2.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/spring/spring-framework-3.2.4.RELEASE/spring3.2.4_jarFile/spring-core-3.2.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/spring/spring-framework-3.2.4.RELEASE/spring3.2.4_jarFile/spring-expression-3.2.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/spring/spring-framework-3.2.4.RELEASE/spring3.2.4_jarFile/spring-instrument-3.2.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/spring/spring-framework-3.2.4.RELEASE/spring3.2.4_jarFile/spring-instrument-tomcat-3.2.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/spring/spring-framework-3.2.4.RELEASE/spring3.2.4_jarFile/spring-jdbc-3.2.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/spring/spring-framework-3.2.4.RELEASE/spring3.2.4_jarFile/spring-jms-3.2.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/spring/spring-framework-3.2.4.RELEASE/spring3.2.4_jarFile/spring-orm-3.2.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/spring/spring-framework-3.2.4.RELEASE/spring3.2.4_jarFile/spring-oxm-3.2.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/spring/spring-framework-3.2.4.RELEASE/spring3.2.4_jarFile/spring-struts-3.2.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/spring/spring-framework-3.2.4.RELEASE/spring3.2.4_jarFile/spring-test-3.2.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/spring/spring-framework-3.2.4.RELEASE/spring3.2.4_jarFile/spring-tx-3.2.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/spring/spring-framework-3.2.4.RELEASE/spring3.2.4_jarFile/spring-web-3.2.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/spring/spring-framework-3.2.4.RELEASE/spring3.2.4_jarFile/spring-webmvc-3.2.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/spring/spring-framework-3.2.4.RELEASE/spring3.2.4_jarFile/spring-webmvc-portlet-3.2.4.RELEASE.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/jre7/lib/ext/ojdbc6.jar"/>
+	<classpathentry kind="lib" path="C:/00.KOITT/90.Downloads/servletFileUploads/lib/cos.jar"/>
+	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
+</classpath>
